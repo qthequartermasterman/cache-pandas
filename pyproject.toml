@@ -1,0 +1,43 @@
+[project]
+name = "cache-pandas"
+version = "0.0.1"
+description = "Easily cache pandas DataFrames to file and in memory."
+authors = [
+    { name = "Andrew Sansom", email = "andrew@euleriancircuit.com" },
+]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.7"
+
+keywords = ["pandas", "cache", "csv"]
+
+classifiers = [
+    "Topic :: Software Development",
+    "Development Status :: 3 - Alpha"
+]
+
+dependencies = [
+    "pandas"
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "isort"
+]
+
+[project.urls]
+homepage = "https://github.com/qthequartermasterman/cache-pandas"
+documentation = "https://github.com/qthequartermasterman/cache-pandas"
+repository = "https://github.com/qthequartermasterman/cache-pandas"
+
+[build-system]
+requires = [
+    "setuptools >= 35.0.2",
+    "setuptools_scm >= 2.0.0, <3"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+target_version = ['py38', 'py39', 'py310', 'py311']
