@@ -37,7 +37,7 @@ def cache_to_csv(
 
     Args:
         filepath: Filepath to save the cached CSV.
-        refresh_time: Time in hours. If the file has not been updated in longer than refresh_time, generate the file
+        refresh_time: Time seconds. If the file has not been updated in longer than refresh_time, generate the file
             anew. If `None`, the file will never be regenerated if a cached version exists.
         create_dirs: Whether to create necessary directories containing the given filepath.
 
@@ -56,7 +56,7 @@ def cache_to_csv(
             try:
                 if (
                         refresh_time is not None
-                        and os.path.getmtime(filepath) + int(refresh_time * 60 * 60)
+                        and os.path.getmtime(filepath) + int(refresh_time)
                         < time.time()
                 ):
                     logging.info(f"File {filepath}n is too old.")
