@@ -33,6 +33,10 @@ def timed_lru_cache(
     def cache_decorator(func: Callable[P, pd.DataFrame]) -> Callable[P, pd.DataFrame]:
         """Function decorator that caches its function's returned DataFrame to memory."""
         func = functools.lru_cache(maxsize=maxsize, typed=typed)(func)
+
+        if seconds is None:
+            return func
+
         func.lifetime = timedelta(seconds=seconds)
         func.expiration = datetime.now(timezone.utc) + func.lifetime
 
