@@ -2,6 +2,7 @@ import unittest
 from unittest import mock
 
 import pandas as pd
+
 from cache_pandas.file import cache_to_csv
 
 NUM_SAMPLES = 10
@@ -39,7 +40,7 @@ class TestCacheToCSV(unittest.TestCase):
     def setUp(self) -> None:
         self.filepath = "sample.csv"
 
-    @mock.MagicMock("pd.DataFrame.to_csv")
+    @mock.patch("pandas.DataFrame.to_csv")
     def test_caches_file_if_not_exists(self, mock_csv: mock.MagicMock) -> None:
         wrapped_func = cache_to_csv(self.filepath)(sample_constant_function)
 
