@@ -4,8 +4,14 @@ import functools
 import logging
 import os
 import pathlib
+import sys
 import time
-from typing import Union, TypeAlias, Optional, Callable, ParamSpec
+from typing import Union, Optional, Callable
+
+if sys.version_info < (3, 10):  # pragma: no cover
+    from typing_extensions import ParamSpec, TypeAlias  # pylint: disable=only-importing-modules-is-allowed
+else:  # pragma: no cover
+    from typing import ParamSpec, TypeAlias
 
 import pandas as pd
 
