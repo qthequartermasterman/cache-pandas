@@ -6,28 +6,28 @@ import os
 import pathlib
 import sys
 import time
-from typing import Union, Optional, Callable
+from typing import Callable, Optional, Union
 
 if sys.version_info < (3, 10):  # pragma: no cover
-    from typing_extensions import ParamSpec, TypeAlias  # pylint: disable=only-importing-modules-is-allowed
+    from typing_extensions import (  # pylint: disable=only-importing-modules-is-allowed
+        ParamSpec, TypeAlias)
 else:  # pragma: no cover
     from typing import ParamSpec, TypeAlias
 
 import pandas as pd
 
 PathLike: TypeAlias = Union[str, pathlib.Path]
-P = ParamSpec('P')
+P = ParamSpec("P")
 
 
 class FileNeedsRefresh(FileNotFoundError):
     """File exists, but needs to be refreshed."""
+
     pass
 
 
 def cache_to_csv(
-        filepath: PathLike,
-        refresh_time: Optional[float] = None,
-        create_dirs: bool = True
+        filepath: PathLike, refresh_time: Optional[float] = None, create_dirs: bool = True
 ) -> Callable[[Callable[P, pd.DataFrame]], Callable[P, pd.DataFrame]]:
     """Decorator-factory that generates a decorator that caches a pandas DataFrame to a csv file for faster retrieval
     in the future.
@@ -54,9 +54,15 @@ def cache_to_csv(
             its result.
             """
             try:
-                if refresh_time is not None and os.path.getmtime(filepath) + int(refresh_time * 60 * 60) < time.time():
-                    logging.info(f'File {filepath}n is too old.')
-                    raise FileNeedsRefresh(f'{filepath} is too old and needs to be refreshed')
+                if (
+                        refresh_time is not None
+                        and os.path.getmtime(filepath) + int(refresh_time * 60 * 60)
+                        < time.time()
+                ):
+                    logging.info(f"File {filepath}n is too old.")
+                    raise FileNeedsRefresh(
+                        f"{filepath} is too old and needs to be refreshed"
+                    )
                 dataframe: pd.DataFrame = pd.read_csv(filepath, index_col=0)
             except FileNotFoundError:
                 if create_dirs:

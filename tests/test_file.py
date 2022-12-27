@@ -14,7 +14,7 @@ def sample_constant_function() -> pd.DataFrame:
     data = {
         "ints": list(range(NUM_SAMPLES)),
         "strs": [str(i) for i in range(NUM_SAMPLES)],
-        "floats": [float(i) for i in range(NUM_SAMPLES)]
+        "floats": [float(i) for i in range(NUM_SAMPLES)],
     }
 
     return pd.DataFrame.from_dict(data)
@@ -30,7 +30,7 @@ def sample_random_dataframe() -> pd.DataFrame:
     data = {
         "ints": numbers,
         "strs": [str(i) for i in numbers],
-        "floats": [float(i) for i in numbers]
+        "floats": [float(i) for i in numbers],
     }
 
     return pd.DataFrame.from_dict(data)
