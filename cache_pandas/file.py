@@ -9,8 +9,7 @@ import time
 from typing import Callable, Optional, Union
 
 if sys.version_info < (3, 10):  # pragma: no cover
-    from typing_extensions import (  # pylint: disable=only-importing-modules-is-allowed
-        ParamSpec, TypeAlias)
+    from typing_extensions import ParamSpec, TypeAlias  # pylint: disable=only-importing-modules-is-allowed
 else:  # pragma: no cover
     from typing import ParamSpec, TypeAlias
 
@@ -54,15 +53,9 @@ def cache_to_csv(
             its result.
             """
             try:
-                if (
-                        refresh_time is not None
-                        and os.path.getmtime(filepath) + int(refresh_time)
-                        < time.time()
-                ):
+                if refresh_time is not None and os.path.getmtime(filepath) + int(refresh_time) < time.time():
                     logging.info(f"File {filepath}n is too old.")
-                    raise FileNeedsRefresh(
-                        f"{filepath} is too old and needs to be refreshed"
-                    )
+                    raise FileNeedsRefresh(f"{filepath} is too old and needs to be refreshed")
                 dataframe: pd.DataFrame = pd.read_csv(filepath, index_col=0)
             except FileNotFoundError:
                 if create_dirs:

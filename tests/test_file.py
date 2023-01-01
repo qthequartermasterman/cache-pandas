@@ -72,8 +72,12 @@ class TestCacheToCSV(unittest.TestCase):
     @freezegun.freeze_time(DUMMY_TIME, as_kwarg="frozen_time")
     @mock.patch("os.path.getmtime", return_value=DUMMY_TIME.timestamp())
     @mock.patch("pandas.DataFrame.to_csv")
-    def test_caches_file_if_expired(self, mock_csv: mock.MagicMock, mock_getmtime: mock.MagicMock,
-                                    frozen_time=None, ) -> None:
+    def test_caches_file_if_expired(
+            self,
+            mock_csv: mock.MagicMock,
+            mock_getmtime: mock.MagicMock,
+            frozen_time=None,
+    ) -> None:
         refresh_time = 100
         expiration_time = DUMMY_TIME + datetime.timedelta(seconds=refresh_time)
 

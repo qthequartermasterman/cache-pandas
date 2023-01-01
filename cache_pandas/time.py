@@ -14,21 +14,19 @@ P = ParamSpec("P")
 
 
 def timed_lru_cache(
-        seconds: Optional[int] = None,
-        maxsize: Optional[int] = None,
-        typed: bool = True
+        seconds: Optional[int] = None, maxsize: Optional[int] = None, typed: bool = True
 ) -> Callable[[Callable[P, pd.DataFrame]], Callable[P, pd.DataFrame]]:
     """Decorator-factory that generates a decorator that caches a pandas DataFrame in memory (with some expiration time)
-        for faster retrieval in the future.
+    for faster retrieval in the future.
 
-        Args:
-            seconds: Number of seconds to retain the cache.
-            maxsize: Maximum number of items to store in the cache.
-            typed: Whether arguments of different types will be cached separately.
+    Args:
+        seconds: Number of seconds to retain the cache.
+        maxsize: Maximum number of items to store in the cache.
+        typed: Whether arguments of different types will be cached separately.
 
-        Returns:
-            Decorator that caches a pandas DataFrame in memory (with an expiration time).
-        """
+    Returns:
+        Decorator that caches a pandas DataFrame in memory (with an expiration time).
+    """
 
     def cache_decorator(func: Callable[P, pd.DataFrame]) -> Callable[P, pd.DataFrame]:
         """Function decorator that caches its function's returned DataFrame to memory."""
