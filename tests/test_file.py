@@ -10,7 +10,7 @@ from cache_pandas.file import cache_to_csv
 NUM_SAMPLES = 10
 number_of_times_called = 0
 
-DUMMY_TIME = datetime.datetime(2012, 1, 1)
+DUMMY_TIME = datetime.datetime(2012, 1, 1, tzinfo=datetime.timezone.utc)
 
 
 def sample_constant_function() -> pd.DataFrame:
@@ -83,7 +83,7 @@ class TestCacheToCSV(unittest.TestCase):
 
         expected_df = sample_constant_function()
 
-        frozen_time.move_to(expiration_time)
+        frozen_time.move_to(expiration_time + datetime.timedelta(seconds=10))
         with mock.patch("pandas.read_csv", return_value=expected_df):
             wrapped_func = cache_to_csv(self.filepath, refresh_time=refresh_time)(sample_constant_function)
             actual_df = wrapped_func()
