@@ -34,3 +34,34 @@ refresh_time: Time seconds. If the file has not been updated in longer than refr
 create_dirs: Whether to create necessary directories containing the given filepath.
 ```
 
+
+## Caching pandas dataframes to memory
+`cache-pandas` includes the decorator `cache_to_csv`, which will cache the result of a function (returning a DataFrame) to a memory, using `functools.lru_cache`.
+
+An optional expiration time can also be set. This might be useful for a webscraper where the output DataFrame may change once a day, but within the day, it will be the same. If the decorated function is called after the specified cache expiration, the DataFrame will be regenerated.
+
+### Example
+
+The following example will cache the resulting DataFrame in memory. It will regenerate the DataFrame and its cache if the function is called a second time atleast 100 seconds after the first.
+
+```python
+from cache_pandas import timed_lru_cache
+
+@timed_lru_cache(seconds=100, maxsize=None)
+def sample_constant_function() -> pd.DataFrame:
+    """Sample function that returns a constant DataFrame, for testing purpose."""
+    data = {
+        "ints": list(range(NUM_SAMPLES)),
+        "strs": [str(i) for i in range(NUM_SAMPLES)],
+        "floats": [float(i) for i in range(NUM_SAMPLES)],
+    }
+
+    return pd.DataFrame.from_dict(data)
+```
+
+### Args
+```
+seconds: Number of seconds to retain the cache.
+maxsize: Maximum number of items to store in the cache. See `functools.lru_cache` for more details.
+typed: Whether arguments of different types will be cached separately. See `functools.lru_cache` for more details.
+```
