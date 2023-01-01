@@ -23,7 +23,8 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "black",
-    "isort"
+    "freezegun",
+    "isort",
 ]
 
 [project.urls]
